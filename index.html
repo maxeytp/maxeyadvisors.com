@@ -137,14 +137,12 @@
 
         /* INTRO STRIP */
         .intro-strip { background: var(--navy); padding: 56px 0; }
-        .intro-strip .container { display: flex; align-items: flex-start; gap: 40px; }
-        .intro-strip .accent-line { width: 4px; min-height: 100%; background: var(--gold); flex-shrink: 0; align-self: stretch; border-radius: 2px; }
-        .intro-strip .intro-text { flex: 1; }
+        .intro-strip .container { display: flex; align-items: center; gap: 48px; }
+        .intro-strip .accent-line { width: 60px; height: 3px; background: var(--gold); flex-shrink: 0; }
         .intro-strip p {
-            font-size: 1.05rem; color: rgba(255,255,255,0.85);
-            font-weight: 300; line-height: 1.8;
+            font-size: 1.15rem; color: rgba(255,255,255,0.85);
+            font-weight: 300; line-height: 1.8; max-width: 800px;
         }
-        .intro-strip p + p { margin-top: 16px; }
 
         /* SECTION COMMON */
         .section { padding: 90px 0; }
@@ -272,71 +270,27 @@
         }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* RESPONSIVE — tablet */
+        /* RESPONSIVE */
         @media (max-width: 1024px) {
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .industries-grid { grid-template-columns: repeat(2, 1fr); }
             .feature-inner { grid-template-columns: 1fr; gap: 36px; }
-            .approach-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
         }
-
-        /* RESPONSIVE — mobile */
         @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            .section { padding: 56px 0; }
-
-            /* Nav */
-            .navbar .container { height: 60px; }
-            .logo { font-size: 1.1rem; }
+            .section { padding: 64px 0; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
-
-            /* Hero */
             .hero-content { margin-left: 0; padding: 0; text-align: center; }
-            .hero-content .hero-label { border-left: none; border-bottom: 2px solid var(--gold); padding-left: 0; padding-bottom: 6px; }
-            .hero h1 { font-size: clamp(1.9rem, 7vw, 2.6rem); }
-            .hero p { margin-left: auto; margin-right: auto; font-size: 1rem; }
-            .hero .btn { display: block; width: 100%; max-width: 280px; margin: 0 auto; text-align: center; }
-            .hero .btn-outline-white { margin-left: 0; margin-top: 12px; }
-            .hero-scroll { display: none; }
-
-            /* Intro strip */
-            .intro-strip { padding: 40px 0; }
-            .intro-strip .container { flex-direction: column; gap: 20px; }
-            .intro-strip .accent-line { width: 48px; height: 3px; align-self: auto; min-height: unset; }
-            .intro-strip p { font-size: 0.95rem; }
-
-            /* Services */
-            .services-grid { grid-template-columns: 1fr; gap: 16px; }
-            .service-card { padding: 28px 22px; }
-
-            /* Feature / About */
-            .feature-img-placeholder { display: none; }
-
-            /* Industries */
-            .industries-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .industry-card { padding: 28px 16px; }
-
-            /* Approach */
-            .approach-grid { grid-template-columns: 1fr; gap: 28px; }
-            .approach-card { padding: 0; }
-
-            /* CTA */
-            .cta { padding: 60px 0; }
-            .cta-email { font-size: 1rem; word-break: break-all; }
-            .cta .btn { display: block; width: 100%; max-width: 280px; margin: 0 auto; }
-
-            /* Footer */
-            .footer { padding: 32px 0; }
-            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-            .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
-        }
-
-        /* RESPONSIVE — small mobile */
-        @media (max-width: 420px) {
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+            .hero .btn-outline-white { display: none; }
+            .services-grid { grid-template-columns: 1fr; }
             .industries-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 1.9rem; }
-            .section-title { font-size: 1.7rem; }
+            .approach-grid { grid-template-columns: 1fr; gap: 32px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .intro-strip .container { flex-direction: column; gap: 20px; text-align: center; }
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
@@ -389,10 +343,8 @@
     <section class="intro-strip">
         <div class="container">
             <div class="accent-line"></div>
-            <div class="intro-text">
-                <p>Since 2007, we have provided top-tier guidance to where it&#8217;s needed most. With a wide network of unique talent and funding sources to help grow both start-up and global clients, we understand your needs because we&#8217;ve been there and have come out stronger on the other side.</p>
-                <p>Maxey Advisors brings senior-level expertise to <strong>every</strong> engagement. We are hands-on partners who have led transformations across industries &#8212; not just planned them.</p>
-            </div>
+            <p>Since 2007, we have provided top-tier guidance to where it&#8217;s needed most. With a wide network of unique talent and funding sources to help grow both start-up and global clients, we understand your needs because we&#8217;ve been there and have come out stronger on the other side.</p>
+            <p style="margin-top: 20px;">Maxey Advisors brings senior-level expertise to <strong>every</strong> engagement. We are hands-on partners who have led transformations across industries &#8212; not just planned them.</p>
         </div>
     </section>
 
