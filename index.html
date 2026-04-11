@@ -4,36 +4,563 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maxey Advisors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #102B3F;
+            --navy-light: #1a3d57;
+            --gold: #C9A84C;
+            --gold-light: #D4BA6A;
+            --text-dark: #102B3F;
+            --text-gray: #324A6D;
+            --text-light: #7A7A7A;
+            --bg-light: #F8F9FA;
+            --white: #FFFFFF;
         }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; color: var(--text-dark); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* NAV */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(16, 43, 63, 0.95); padding: 0; transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
+        .navbar .container {
+            display: flex; justify-content: space-between; align-items: center; height: 72px;
         }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+        .logo {
+            font-size: 1.3rem; font-weight: 700; color: var(--white);
+            letter-spacing: 0.08em;
+        }
+        .logo span { color: var(--gold); }
+        .nav-links { display: flex; list-style: none; gap: 32px; }
+        .nav-links a {
+            font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.8);
+            transition: color 0.3s; letter-spacing: 0.02em;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; background: none; border: none; padding: 4px;
+        }
+        .hamburger span {
+            display: block; width: 24px; height: 2px; background: var(--white);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* MOBILE NAV */
+        .mobile-nav {
+            display: none; position: fixed; inset: 0;
+            background: rgba(16, 43, 63, 0.98); z-index: 999;
+            flex-direction: column; justify-content: center; align-items: center; gap: 36px;
+        }
+        .mobile-nav.active { display: flex; }
+        .mobile-nav a { font-size: 1.5rem; color: var(--white); font-weight: 500; transition: color 0.3s; }
+        .mobile-nav a:hover { color: var(--gold); }
+
+        /* HERO */
+        .hero {
+            position: relative; min-height: 100vh;
+            display: flex; align-items: center; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('images/Maze.jpeg') center/cover no-repeat;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: rgba(16, 43, 63, 0.82);
+        }
+        .hero-content {
+            position: relative; z-index: 2; max-width: 720px;
+            padding: 0 24px 0 0; margin-left: 8%;
+        }
+        .hero-label {
+            display: inline-block; font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 20px;
+            border-left: 3px solid var(--gold); padding-left: 12px;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 5.5vw, 3.5rem); color: var(--white);
+            font-weight: 700; line-height: 1.15; margin-bottom: 24px;
+        }
+        .hero h1 em { font-style: normal; color: var(--gold); }
+        .hero p {
+            font-size: 1.1rem; color: rgba(255,255,255,0.75);
+            max-width: 540px; margin-bottom: 36px; line-height: 1.8; font-weight: 300;
+        }
+        .btn {
+            display: inline-block; padding: 14px 36px;
+            font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 0.05em; border: 2px solid transparent;
+            cursor: pointer; transition: all 0.3s; text-transform: uppercase;
+        }
+        .btn-white {
+            background: var(--white); color: var(--navy); border-color: var(--white);
+        }
+        .btn-white:hover {
+            background: transparent; color: var(--white);
+        }
+        .btn-outline-white {
+            background: transparent; color: var(--white);
+            border-color: rgba(255,255,255,0.4); margin-left: 16px;
+        }
+        .btn-outline-white:hover { border-color: var(--gold); color: var(--gold); }
+        .btn-gold {
+            background: var(--gold); color: var(--navy); border-color: var(--gold);
+        }
+        .btn-gold:hover {
+            background: var(--gold-light); border-color: var(--gold-light);
+            transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.25);
+        }
+        .hero-scroll {
+            position: absolute; bottom: 36px; left: 50%;
+            transform: translateX(-50%); z-index: 2;
+            color: rgba(255,255,255,0.4); font-size: 0.7rem;
+            letter-spacing: 0.2em; text-transform: uppercase; text-align: center;
+            animation: bob 2s ease-in-out infinite;
+        }
+        .hero-scroll .arrow { display: block; margin-top: 6px; font-size: 1.1rem; }
+        @keyframes bob {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* INTRO STRIP */
+        .intro-strip { background: var(--navy); padding: 56px 0; }
+        .intro-strip .container { display: flex; align-items: center; gap: 48px; }
+        .intro-strip .accent-line { width: 60px; height: 3px; background: var(--gold); flex-shrink: 0; }
+        .intro-strip p {
+            font-size: 1.15rem; color: rgba(255,255,255,0.85);
+            font-weight: 300; line-height: 1.8; max-width: 800px;
+        }
+
+        /* SECTION COMMON */
+        .section { padding: 90px 0; }
+        .section-label {
+            display: inline-block; font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 14px;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+            font-weight: 700; margin-bottom: 16px; line-height: 1.2;
+        }
+        .section-subtitle {
+            font-size: 1rem; color: var(--text-gray); max-width: 600px; line-height: 1.7;
+        }
+
+        /* SERVICES */
+        .services { background: var(--white); }
+        .services-header { text-align: center; margin-bottom: 56px; }
+        .services-header .section-subtitle { margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+        .service-card {
+            padding: 36px 28px; background: var(--white);
+            border: 1px solid #E8ECF0; border-radius: 4px;
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .service-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 3px; background: var(--gold);
+            transform: scaleX(0); transition: transform 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(16, 43, 63, 0.1);
+            border-color: transparent;
+        }
+        .service-card:hover::after { transform: scaleX(1); }
+        .service-icon { width: 44px; height: 44px; margin-bottom: 18px; color: var(--gold); }
+        .service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 10px; }
+        .service-card p { font-size: 0.9rem; color: var(--text-gray); line-height: 1.7; }
+
+        /* FEATURE TWO-COL */
+        .feature { background: var(--bg-light); }
+        .feature-inner {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 60px; align-items: center;
+        }
+        .feature-img-placeholder {
+            width: 100%; aspect-ratio: 4/3; border-radius: 4px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 3rem; opacity: 0.6;
+        }
+        .feature-text .section-title { max-width: 480px; }
+        .feature-text p {
+            font-size: 0.95rem; color: var(--text-gray); line-height: 1.8; margin-bottom: 16px;
+        }
+        .feature-text .btn { margin-top: 12px; }
+
+        /* INDUSTRIES */
+        .industries { background: var(--navy); color: var(--white); }
+        .industries-header { text-align: center; margin-bottom: 56px; }
+        .industries-header .section-title { color: var(--white); }
+        .industries-header .section-subtitle { color: rgba(255,255,255,0.6); margin: 0 auto; }
+        .industries-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .industry-card {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px; padding: 36px 24px; text-align: center; transition: all 0.3s;
+        }
+        .industry-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+            border-color: rgba(201,168,76,0.3);
+        }
+        .industry-icon { width: 48px; height: 48px; margin: 0 auto 16px; color: var(--gold); }
+        .industry-card h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+        .industry-card p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+        /* APPROACH */
+        .approach { background: var(--white); }
+        .approach-header { text-align: center; margin-bottom: 56px; }
+        .approach-header .section-subtitle { margin: 0 auto; }
+        .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .approach-card { text-align: center; padding: 0 12px; }
+        .approach-num {
+            font-size: 3rem; font-weight: 700; color: var(--gold);
+            opacity: 0.25; margin-bottom: 4px; line-height: 1;
+        }
+        .approach-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+        .approach-line { width: 36px; height: 2px; background: var(--gold); margin: 0 auto 16px; }
+        .approach-card p { font-size: 0.9rem; color: var(--text-gray); line-height: 1.8; }
+
+        /* STATS */
+        .stats { background: var(--bg-light); padding: 64px 0; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center;
+        }
+        .stat-number { font-size: 2.8rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+        .stat-number span { color: var(--gold); }
+        .stat-label { font-size: 0.85rem; color: var(--text-light); font-weight: 400; }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 80px 0; text-align: center;
+        }
+        .cta .section-title { color: var(--white); margin-bottom: 16px; }
+        .cta p {
+            font-size: 1.05rem; color: rgba(255,255,255,0.65);
+            max-width: 520px; margin: 0 auto 32px; line-height: 1.7;
+        }
+        .cta-email {
+            display: inline-block; font-size: 1.3rem; font-weight: 500;
+            color: var(--gold); border-bottom: 2px solid rgba(201,168,76,0.3);
+            padding-bottom: 4px; transition: all 0.3s; margin-top: 16px;
+        }
+        .cta-email:hover { border-color: var(--gold); }
+
+        /* FOOTER */
+        .footer {
+            background: #0a1f2e; padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+        .footer-left p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+
+        /* ANIMATIONS */
+        .fade-up {
+            opacity: 0; transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .industries-grid { grid-template-columns: repeat(2, 1fr); }
+            .feature-inner { grid-template-columns: 1fr; gap: 36px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 0; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .hero-content { margin-left: 0; padding: 0; text-align: center; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+            .hero .btn-outline-white { display: none; }
+            .services-grid { grid-template-columns: 1fr; }
+            .industries-grid { grid-template-columns: 1fr; }
+            .approach-grid { grid-template-columns: 1fr; gap: 32px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .intro-strip .container { flex-direction: column; gap: 20px; text-align: center; }
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Currently Rebranding</h1>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">MAXEY <span>ADVISORS</span></a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#industries">Industries</a></li>
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#services" onclick="closeMobile()">Services</a>
+        <a href="#industries" onclick="closeMobile()">Industries</a>
+        <a href="#approach" onclick="closeMobile()">Approach</a>
+        <a href="#about" onclick="closeMobile()">About</a>
+        <a href="#contact" onclick="closeMobile()">Contact</a>
     </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-label">Trusted Advisory</div>
+            <h1>Navigating Complexity.<br><em>Delivering Clarity.</em></h1>
+            <p>We partner with forward-thinking organizations to solve their most complex strategic, operational, and digital challenges.</p>
+            <div>
+                <a href="#contact" class="btn btn-white">Get in Touch</a>
+                <a href="#services" class="btn btn-outline-white">Our Services</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <span class="arrow">&#8595;</span>
+        </div>
+    </section>
+
+    <!-- INTRO STRIP -->
+    <section class="intro-strip">
+        <div class="container">
+            <div class="accent-line"></div>
+            <p>Maxey Advisors brings senior-level expertise to every engagement. We are hands-on partners who have led transformations across industries &#8212; not just planned them.</p>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="services-header fade-up">
+                <div class="section-label">What We Do</div>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">End-to-end advisory solutions that drive measurable outcomes across strategy, technology, and operations.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 38V18l18-12 18 12v20a2 2 0 01-2 2H8a2 2 0 01-2-2z"/><polyline points="18 40 18 28 30 28 30 40"/></svg>
+                    <h3>Business Transformation</h3>
+                    <p>Large-scale change initiatives that reshape operating models, accelerate growth, and build lasting competitive advantage.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="20"/><path d="M24 4a28 28 0 010 40M24 4a28 28 0 000 40M4 24h40"/></svg>
+                    <h3>Strategic Advisory</h3>
+                    <p>Actionable growth strategies grounded in data-driven market analysis, competitive positioning, and executive alignment.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="22" width="36" height="20" rx="2"/><path d="M14 22V14a10 10 0 0120 0v8"/><circle cx="24" cy="33" r="3"/></svg>
+                    <h3>Digital &amp; IT Strategy</h3>
+                    <p>Technology roadmaps that align IT capabilities with business objectives, from cloud migration to platform selection.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="44 8 26 26 18 18 4 32"/><polyline points="34 8 44 8 44 18"/></svg>
+                    <h3>Data &amp; Analytics</h3>
+                    <p>Turning raw data into strategic assets through advanced analytics, BI implementation, and data governance frameworks.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="20"/><path d="M24 14v10l7 7"/></svg>
+                    <h3>Operational Excellence</h3>
+                    <p>Streamlining processes and reducing costs through lean methodologies, automation, and performance management systems.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M40 42v-4a8 8 0 00-8-8H16a8 8 0 00-8 8v4"/><circle cx="24" cy="16" r="10"/></svg>
+                    <h3>Change Management</h3>
+                    <p>Aligning people, processes, and culture with new strategic directions and technology platforms to ensure success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE / ABOUT -->
+    <section class="section feature" id="about">
+        <div class="container">
+            <div class="feature-inner">
+                <div class="feature-img-placeholder fade-up">
+                    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 38V18l18-12 18 12v20a2 2 0 01-2 2H8a2 2 0 01-2-2z"/><polyline points="18 40 18 28 30 28 30 40"/></svg>
+                </div>
+                <div class="feature-text fade-up">
+                    <div class="section-label">About Us</div>
+                    <h2 class="section-title">Trusted Advisors for a Complex World</h2>
+                    <p>Maxey Advisors was founded on the belief that the best advisory work happens when deep expertise meets genuine partnership.</p>
+                    <p>We bring senior-level talent to every engagement. Our team combines decades of experience across management consulting, technology leadership, and industry operations to deliver solutions that are both ambitious and achievable.</p>
+                    <a href="#contact" class="btn btn-gold">Work With Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section class="section industries" id="industries">
+        <div class="container">
+            <div class="industries-header fade-up">
+                <div class="section-label">Sector Expertise</div>
+                <h2 class="section-title">Industries We Serve</h2>
+                <p class="section-subtitle">Deep domain knowledge across the sectors that drive the global economy.</p>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="40" height="40" rx="4"/><path d="M12 28l8-8 6 6 10-10"/></svg>
+                    <h3>Financial Services</h3>
+                    <p>Banking, insurance, and asset management modernization</p>
+                </div>
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M24 4v40M14 14h20M14 24h20M14 34h20"/></svg>
+                    <h3>Healthcare &amp; Life Sciences</h3>
+                    <p>Pharma, biotech, and provider digital transformation</p>
+                </div>
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="6" width="32" height="28" rx="2"/><line x1="8" y1="40" x2="40" y2="40"/><line x1="20" y1="34" x2="20" y2="40"/><line x1="28" y1="34" x2="28" y2="40"/></svg>
+                    <h3>Technology</h3>
+                    <p>SaaS, platforms, and enterprise technology scaling</p>
+                </div>
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="10"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6"/></svg>
+                    <h3>Energy &amp; Utilities</h3>
+                    <p>Sustainability, grid modernization, and operational efficiency</p>
+                </div>
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 14h36M6 24h36M6 34h36"/><rect x="4" y="8" width="40" height="32" rx="2"/><circle cx="16" cy="14" r="3" fill="currentColor"/><circle cx="32" cy="34" r="3" fill="currentColor"/></svg>
+                    <h3>Consumer &amp; Luxury Goods</h3>
+                    <p>Brand strategy, omnichannel transformation, and premium market positioning</p>
+                </div>
+                <div class="industry-card fade-up">
+                    <svg class="industry-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="28" width="40" height="16" rx="2"/><rect x="12" y="16" width="24" height="12"/><rect x="18" y="6" width="12" height="10"/><line x1="24" y1="6" x2="24" y2="4"/></svg>
+                    <h3>Manufacturing</h3>
+                    <p>Supply chain optimization, Industry 4.0 adoption, and operational transformation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section class="section approach" id="approach">
+        <div class="container">
+            <div class="approach-header fade-up">
+                <div class="section-label">How We Work</div>
+                <h2 class="section-title">Our Approach</h2>
+                <p class="section-subtitle">We partner with you to deliver results that endure.</p>
+            </div>
+            <div class="approach-grid">
+                <div class="approach-card fade-up">
+                    <div class="approach-num">01</div>
+                    <h3>Strategic</h3>
+                    <div class="approach-line"></div>
+                    <p>Every engagement begins with a clear understanding of your strategic objectives. We align our work to your north star.</p>
+                </div>
+                <div class="approach-card fade-up">
+                    <div class="approach-num">02</div>
+                    <h3>Holistic</h3>
+                    <div class="approach-line"></div>
+                    <p>We look beyond isolated problems to understand the full picture &#8212; connecting people, process, technology, and culture.</p>
+                </div>
+                <div class="approach-card fade-up">
+                    <div class="approach-num">03</div>
+                    <h3>Hands-On</h3>
+                    <div class="approach-line"></div>
+                    <p>We work shoulder-to-shoulder with your teams, embedding within your organization to drive execution and capability building.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid fade-up">
+                <div>
+                    <div class="stat-number">50<span>+</span></div>
+                    <div class="stat-label">Engagements Delivered</div>
+                </div>
+                <div>
+                    <div class="stat-number">12<span>+</span></div>
+                    <div class="stat-label">Industries Served</div>
+                </div>
+                <div>
+                    <div class="stat-number">98<span>%</span></div>
+                    <div class="stat-label">Client Retention</div>
+                </div>
+                <div>
+                    <div class="stat-number">15<span>+</span></div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / CONTACT -->
+    <section class="cta" id="contact">
+        <div class="container fade-up">
+            <div class="section-label">Get in Touch</div>
+            <h2 class="section-title" style="color: var(--white);">Start a Conversation</h2>
+            <p>Whether you are facing a complex transformation or exploring new strategic opportunities, we welcome the chance to learn more.</p>
+            <a href="mailto:info@maxeyadvisors.com" class="btn btn-gold">Contact Us</a>
+            <br>
+            <a href="mailto:info@maxeyadvisors.com" class="cta-email">info@maxeyadvisors.com</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left"><p>&#169; 2026 Maxey Advisors. All rights reserved.</p></div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        var ham = document.getElementById("hamburger");
+        var mob = document.getElementById("mobileNav");
+        ham.addEventListener("click", function() {
+            ham.classList.toggle("active");
+            mob.classList.toggle("active");
+            document.body.style.overflow = mob.classList.contains("active") ? "hidden" : "";
+        });
+        function closeMobile() {
+            ham.classList.remove("active");
+            mob.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+        var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) { entry.target.classList.add("visible"); }
+            });
+        }, { threshold: 0.12 });
+        var fadeEls = document.querySelectorAll(".fade-up");
+        for (var i = 0; i < fadeEls.length; i++) { obs.observe(fadeEls[i]); }
+    </script>
 </body>
 </html>
