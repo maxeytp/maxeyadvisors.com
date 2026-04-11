@@ -144,6 +144,56 @@
             font-weight: 300; line-height: 1.8; max-width: 800px;
         }
 
+        /* GLOBAL REACH */
+        .global-reach { background: var(--bg-light); padding: 90px 0; }
+        .global-reach-inner {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+        }
+        .global-reach-text .section-title { max-width: 480px; }
+        .global-reach-text p {
+            font-size: 0.97rem; color: var(--text-gray); line-height: 1.85; margin-bottom: 16px;
+        }
+        .global-reach-stats {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+        }
+        .reach-stat {
+            background: var(--white); border-radius: 4px; padding: 32px 24px;
+            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 4px 24px rgba(16, 43, 63, 0.06);
+        }
+        .reach-stat-number {
+            font-size: 2.4rem; font-weight: 700; color: var(--navy);
+            line-height: 1; margin-bottom: 8px;
+        }
+        .reach-stat-number span { color: var(--gold); }
+        .reach-stat-label {
+            font-size: 0.82rem; color: var(--text-gray); line-height: 1.5; font-weight: 500;
+        }
+        .reach-quote {
+            grid-column: 1 / -1; background: var(--navy); border-radius: 4px;
+            padding: 28px 28px; position: relative;
+        }
+        .reach-quote::before {
+            content: '\201C'; position: absolute; top: 8px; left: 20px;
+            font-size: 4rem; color: var(--gold); opacity: 0.4; line-height: 1;
+            font-family: Georgia, serif;
+        }
+        .reach-quote p {
+            font-size: 0.95rem; color: rgba(255,255,255,0.85);
+            line-height: 1.7; padding-left: 16px; font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .global-reach-inner { grid-template-columns: 1fr; gap: 48px; }
+            .global-reach-text .section-title { max-width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .global-reach { padding: 64px 0; }
+            .global-reach-stats { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .reach-stat { padding: 24px 18px; }
+            .reach-stat-number { font-size: 2rem; }
+        }
+
         /* SECTION COMMON */
         .section { padding: 90px 0; }
         .section-label {
@@ -348,6 +398,42 @@
         </div>
     </section>
 
+    <!-- GLOBAL REACH -->
+    <section class="global-reach">
+        <div class="container">
+            <div class="global-reach-inner">
+                <div class="global-reach-text fade-up">
+                    <div class="section-label">Global Presence</div>
+                    <h2 class="section-title">A Practice Built on Proven, Worldwide Impact</h2>
+                    <p>Maxey Advisors has delivered results in over <strong>70 countries</strong>, leading initiatives that range from high-velocity start-up launches to the most complex, large-scale transformations undertaken by globally recognized industry leaders.</p>
+                    <p>We have guided organizations through initiatives valued from <strong>$500 thousand to $25 billion</strong> &#8212; bringing the same rigor, commitment, and senior-level expertise regardless of scale. Whether you are a founder building something new or a global enterprise redefining your industry, we have the experience to meet you where you are.</p>
+                    <p>Our clients span the full spectrum: disruptive start-ups seeking their first institutional footing, high-growth mid-market companies navigating rapid scale, and Fortune 100 corporations executing transformations that reshape entire industries. What unites them is a demand for trusted advisors who deliver &#8212; not just advise.</p>
+                </div>
+                <div class="global-reach-stats fade-up">
+                    <div class="reach-stat">
+                        <div class="reach-stat-number">70<span>+</span></div>
+                        <div class="reach-stat-label">Countries where we have delivered engagements</div>
+                    </div>
+                    <div class="reach-stat">
+                        <div class="reach-stat-number"><span>$</span>25<span>B</span></div>
+                        <div class="reach-stat-label">Largest initiative value led to completion</div>
+                    </div>
+                    <div class="reach-stat">
+                        <div class="reach-stat-number" style="font-size: 1.6rem; padding-top: 4px;">Short &amp;<br>Multi-Year</div>
+                        <div class="reach-stat-label">Flexible engagements from focused sprints to long-term strategic partnerships</div>
+                    </div>
+                    <div class="reach-stat">
+                        <div class="reach-stat-number">2<span>x</span></div>
+                        <div class="reach-stat-label">Sectors served: emerging ventures to global industry leaders</div>
+                    </div>
+                    <div class="reach-quote">
+                        <p>From seed-stage founders to the boardrooms of the world&#8217;s most recognized brands &#8212; we understand your challenges because we&#8217;ve navigated them ourselves, and we&#8217;ve come out stronger on the other side.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SERVICES -->
     <section class="section services" id="services">
         <div class="container">
@@ -384,8 +470,13 @@
                 </div>
                 <div class="service-card fade-up">
                     <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M40 42v-4a8 8 0 00-8-8H16a8 8 0 00-8 8v4"/><circle cx="24" cy="16" r="10"/></svg>
-                    <h3>Change Management</h3>
+                    <h3>Human Resources &amp; Change Management</h3>
                     <p>Aligning people, processes, and culture with new strategic directions and technology platforms to ensure success.</p>
+                </div>
+                <div class="service-card fade-up" style="border-color: rgba(201,168,76,0.3); background: linear-gradient(135deg, #fff 85%, rgba(201,168,76,0.06) 100%);">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 24c0-9.94 8.06-18 18-18s18 8.06 18 18"/><path d="M6 24l6 6m-6-6l6-6"/><path d="M30 36l4 4 8-8"/><circle cx="24" cy="24" r="4"/></svg>
+                    <h3>Right-The-Wreck<sup style="font-size:0.65em;">&#169;</sup></h3>
+                    <p>Our signature service &#8212; turning around off-the-rails or stalled initiatives. We step in, diagnose fast, and restore momentum where it matters most.</p>
                 </div>
             </div>
         </div>
