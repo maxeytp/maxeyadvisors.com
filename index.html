@@ -13,13 +13,14 @@
             --navy-light: #1a3d57;
             --gold: #C9A84C;
             --gold-light: #D4BA6A;
+            --gold-dark: #A8893A;
             --text-dark: #102B3F;
             --text-gray: #324A6D;
             --text-light: #7A7A7A;
             --bg-light: #F8F9FA;
             --white: #FFFFFF;
         }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scroll-padding-top: 104px; }
         body { font-family: 'Poppins', sans-serif; color: var(--text-dark); line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -27,29 +28,29 @@
         /* NAV */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: rgba(16, 43, 63, 0.95); padding: 0; transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.97); padding: 0; transition: all 0.3s;
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(16, 43, 63, 0.08);
         }
         .navbar .container {
-            display: flex; justify-content: space-between; align-items: center; height: 72px;
+            display: flex; justify-content: space-between; align-items: center; height: 84px;
         }
-        .logo {
-            font-size: 1.3rem; font-weight: 700; color: var(--white);
-            letter-spacing: 0.08em;
+        .logo { display: flex; align-items: center; }
+        .logo img {
+            height: 56px; width: auto; display: block;
         }
-        .logo span { color: var(--gold); }
         .nav-links { display: flex; list-style: none; gap: 32px; }
         .nav-links a {
-            font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.8);
+            font-size: 0.88rem; font-weight: 500; color: var(--navy);
             transition: color 0.3s; letter-spacing: 0.02em;
         }
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover { color: var(--gold-dark); }
         .hamburger {
             display: none; flex-direction: column; gap: 5px;
             cursor: pointer; background: none; border: none; padding: 4px;
         }
         .hamburger span {
-            display: block; width: 24px; height: 2px; background: var(--white);
+            display: block; width: 24px; height: 2px; background: var(--navy);
             transition: transform 0.3s, opacity 0.3s;
         }
         .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -331,6 +332,9 @@
             .section { padding: 64px 0; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
+            .navbar .container { height: 68px; }
+            .logo img { height: 42px; }
+            html { scroll-padding-top: 84px; }
             .hero-content { margin-left: 0; padding: 0; text-align: center; }
             .hero p { margin-left: auto; margin-right: auto; }
             .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
@@ -349,12 +353,14 @@
     <!-- NAV -->
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">MAXEY <span>ADVISORS</span></a>
+            <a href="#" class="logo" aria-label="Maxey Advisors — Navigating Complexity. Delivering Clarity.">
+                <img src="images/logo.png" alt="Maxey Advisors">
+            </a>
             <ul class="nav-links">
                 <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#industries">Industries</a></li>
                 <li><a href="#approach">Approach</a></li>
-                <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -364,9 +370,9 @@
     </nav>
     <div class="mobile-nav" id="mobileNav">
         <a href="#services" onclick="closeMobile()">Services</a>
+        <a href="#about" onclick="closeMobile()">About</a>
         <a href="#industries" onclick="closeMobile()">Industries</a>
         <a href="#approach" onclick="closeMobile()">Approach</a>
-        <a href="#about" onclick="closeMobile()">About</a>
         <a href="#contact" onclick="closeMobile()">Contact</a>
     </div>
 
@@ -376,7 +382,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-label">Trusted Advisory</div>
-            <h1>Navigating Complexity.<br><em>Delivering Clarity.</em></h1>
+            <h1>Trusted Where the<br><em>Stakes Are Highest.</em></h1>
             <p>We partner with forward-thinking organizations to solve their most complex strategic, operational, and digital challenges.</p>
             <div>
                 <a href="#contact" class="btn btn-white">Get in Touch</a>
