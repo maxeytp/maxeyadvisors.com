@@ -20,7 +20,7 @@
             --bg-light: #F8F9FA;
             --white: #FFFFFF;
         }
-        html { scroll-behavior: smooth; scroll-padding-top: 104px; }
+        html { scroll-behavior: smooth; scroll-padding-top: 92px; }
         body { font-family: 'Poppins', sans-serif; color: var(--text-dark); line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -33,11 +33,22 @@
             border-bottom: 1px solid rgba(16, 43, 63, 0.08);
         }
         .navbar .container {
-            display: flex; justify-content: space-between; align-items: center; height: 84px;
+            display: flex; justify-content: space-between; align-items: center;
+            height: clamp(92px, 12.5vw, 140px);
+            transition: height 0.35s ease;
         }
-        .logo { display: flex; align-items: center; }
+        .logo { display: flex; align-items: center; min-width: 0; }
         .logo img {
-            height: 56px; width: auto; display: block;
+            height: clamp(64px, 8.75vw, 112px); width: auto; display: block;
+            max-width: 62vw; object-fit: contain;
+            transition: height 0.35s ease;
+        }
+        /* Compact state once scrolled past the hero */
+        .navbar.shrink { box-shadow: 0 2px 16px rgba(16, 43, 63, 0.08); }
+        .navbar.shrink .container { height: 70px; }
+        .navbar.shrink .logo img { height: 48px; }
+        @media (prefers-reduced-motion: reduce) {
+            .navbar .container, .logo img { transition: none; }
         }
         .nav-links { display: flex; list-style: none; gap: 32px; }
         .nav-links a {
@@ -332,9 +343,6 @@
             .section { padding: 64px 0; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
-            .navbar .container { height: 68px; }
-            .logo img { height: 42px; }
-            html { scroll-padding-top: 84px; }
             .hero-content { margin-left: 0; padding: 0; text-align: center; }
             .hero p { margin-left: auto; margin-right: auto; }
             .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
@@ -626,6 +634,28 @@
         }, { threshold: 0.12 });
         var fadeEls = document.querySelectorAll(".fade-up");
         for (var i = 0; i < fadeEls.length; i++) { obs.observe(fadeEls[i]); }
+
+        // Shrink the navbar once the hero has scrolled past
+        (function() {
+            var nav = document.querySelector(".navbar");
+            var hero = document.querySelector(".hero");
+            var threshold = 0, ticking = false;
+            function measure() {
+                // trigger as the hero's last stretch leaves the viewport
+                threshold = Math.max(80, hero.offsetHeight - 140);
+            }
+            function apply() {
+                nav.classList.toggle("shrink", window.pageYOffset > threshold);
+                ticking = false;
+            }
+            function onScroll() {
+                if (!ticking) { ticking = true; window.requestAnimationFrame(apply); }
+            }
+            measure();
+            apply();
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", function() { measure(); apply(); });
+        })();
     </script>
 </body>
 </html>
