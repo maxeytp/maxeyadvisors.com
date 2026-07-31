@@ -252,11 +252,17 @@
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 60px; align-items: center;
         }
-        .feature-img-placeholder {
-            width: 100%; aspect-ratio: 4/3; border-radius: 4px;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        .feature-logo-frame {
+            width: 100%; aspect-ratio: 2.5 / 1; border-radius: 4px;
+            background: var(--white);
+            border: 5px solid var(--navy);
+            box-shadow: 0 10px 36px rgba(16, 43, 63, 0.12);
             display: flex; align-items: center; justify-content: center;
-            color: var(--gold); font-size: 3rem; opacity: 0.6;
+            padding: clamp(24px, 7%, 56px);
+        }
+        .feature-logo-frame img {
+            width: 100%; height: auto; max-height: 100%;
+            object-fit: contain; display: block;
         }
         .feature-text .section-title { max-width: 480px; }
         .feature-text p {
@@ -500,8 +506,8 @@
     <section class="section feature" id="about">
         <div class="container">
             <div class="feature-inner">
-                <div class="feature-img-placeholder fade-up">
-                    <svg width="64" height="64" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 38V18l18-12 18 12v20a2 2 0 01-2 2H8a2 2 0 01-2-2z"/><polyline points="18 40 18 28 30 28 30 40"/></svg>
+                <div class="feature-logo-frame fade-up">
+                    <img src="images/logo.png" alt="">
                 </div>
                 <div class="feature-text fade-up">
                     <div class="section-label">About Us</div>
